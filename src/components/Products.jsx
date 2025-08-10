@@ -26,8 +26,19 @@ const Products = () => {
       setLoading(true);
       const response = await fetch("https://fakestoreapi.com/products/");
       if (componentMounted) {
-        setData(await response.clone().json());
-        setFilter(await response.json());
+        // added mock data: product.stock
+        const products = await response.clone().json();
+
+        const productsWithStock = products.map((p) => {
+          return { ...p, stock: Math.floor(Math.random() * 10) };
+        });
+
+        setData(productsWithStock);
+        setFilter(productsWithStock);
+        // todo: to be updated in https://fakestoreapi.com/products/"
+
+        // setData(await response.clone().json());
+        // setFilter(await response.json());
         setLoading(false);
       }
 
